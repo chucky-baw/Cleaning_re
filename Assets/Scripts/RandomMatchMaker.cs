@@ -34,7 +34,10 @@ public class RandomMatchMaker : Photon.PunBehaviour
     public override void OnPhotonRandomJoinFailed(object[] codeAndMsg)
     {
         base.OnPhotonRandomJoinFailed(codeAndMsg);
+        PhotonNetwork.CreateRoom(null);
+
         Debug.Log("Cant join random room!");
+
     }
 
 }
