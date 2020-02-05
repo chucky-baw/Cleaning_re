@@ -9,6 +9,7 @@ public class HPController : MonoBehaviour
     private float currentHP;
     private float countTime = 0;
     private float maxTime = 25f;
+    private bool timeFlag = true;
     public float currentTime;
     GManager gameManager;
 
@@ -23,7 +24,8 @@ public class HPController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        countTime += Time.deltaTime;
+        //通信時には、対戦相手が車で待つため
+        if(timeFlag) countTime += Time.deltaTime;
 
         reduceTime();
 
@@ -48,6 +50,18 @@ public class HPController : MonoBehaviour
     void reduceTime(){
       currentTime = maxTime - countTime;
       this.GetComponent<Image>().fillAmount = currentTime / maxTime;
+    }
+
+
+    //timeFlagのゲッターとセッター
+    public bool getFlag()
+    {
+        return timeFlag;
+    }
+
+    public void setFlag(bool _flag)
+    {
+        timeFlag = _flag;
     }
 
 

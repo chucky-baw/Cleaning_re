@@ -5,10 +5,14 @@ using Photon;
 
 public class RandomMatchMaker : Photon.PunBehaviour
 {
+    HPController hp;
+
     void Start()
     {
+        hp = FindObjectOfType<HPController>();
         PhotonNetwork.ConnectUsingSettings("0.1");
         PhotonNetwork.logLevel = PhotonLogLevel.Full;
+        hp.setFlag(false);
     }
 
     void Update()
@@ -38,6 +42,8 @@ public class RandomMatchMaker : Photon.PunBehaviour
         if (PhotonNetwork.room.PlayerCount == 2)
         {
             Debug.Log("I'm second player!");
+            hp.setFlag(true);
+
         }
         else
         {
@@ -50,6 +56,8 @@ public class RandomMatchMaker : Photon.PunBehaviour
     public override void OnPhotonPlayerConnected(PhotonPlayer newPlayer)
     {
         Debug.Log("Other player arrived");
+        //二人目のプレイヤーが到着した時、ゲームを開始する
+        hp.setFlag(true);
     }
 
 
