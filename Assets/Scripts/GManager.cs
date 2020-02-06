@@ -11,12 +11,16 @@ public class GManager : MonoBehaviour
         Title,
         Tutorial,
         Playing,
+        MultiPlay,
         Clear,
         GameOver
     }
 
     //現在のゲームの進行状態
     public GameState currentState = GameState.Title;
+
+    //ボタンのキャンバス
+    public Canvas ButtonCanvas;
 
     //ステージ
     public int stage = 0;
@@ -49,6 +53,7 @@ public class GManager : MonoBehaviour
         stage = 0;
         audioSource = this.gameObject.GetComponent<AudioSource>();
         bgmController = FindObjectOfType<BGMController>();
+        ButtonCanvas.gameObject.SetActive(false);
     }
 
 
@@ -74,6 +79,11 @@ public class GManager : MonoBehaviour
             case GameState.Playing:
                 Debug.Log("State start");
                 GameStart();
+                break;
+
+            case GameState.MultiPlay:
+                Debug.Log("MultiPlay Start!");
+                MultiPlayStart();
                 break;
 
             case GameState.Clear:
@@ -109,8 +119,20 @@ public class GManager : MonoBehaviour
         SceneManager.LoadScene(stageName[stage]);
     }
 
+    void MultiPlayStart()
+    {
+        if (!bgmController.gameObject.activeSelf)
+        {
+            bgmController.gameObject.SetActive(true);
+        }
+
+        Debug.Log("MultiPlayStart");
+        SceneManager.LoadScene("MultiPlay");
+    }
+
     void Tutorial()
     {
+        StartCoroutine(longWait());
         SceneManager.LoadScene("Tutorial");
     }
 
@@ -189,7 +211,7 @@ public class GManager : MonoBehaviour
         }
 
         //タイトルシーンにて、クリックしたらスタート
-        if (currentState == GameState.Title && Input.GetMouseButtonUp(0))
+        if (currentState == GameState.Title && Input.GetMouseButtonDown(0))
         {
             audioSource.PlayOneShot(TapButtonSound);
             StartCoroutine(wait(currentState));
@@ -226,11 +248,20 @@ public class GManager : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         if (state == GameState.Title)
         {
-            dispatch(GameState.Tutorial);
-        } else if(state == GameState.Playing)
+            //dispatch(GameState.Tutorial);
+            ButtonCanvas.gameObject.SetActive(true);
+        }
+        else if(state == GameState.Playing)
         {
             dispatch(GameState.Clear);
         }
+    }
+
+    IEnumerator longWait()
+    {
+        Debug.Log("longwait");
+        yield return new WaitForSeconds(1.0f);
+
     }
 
 
