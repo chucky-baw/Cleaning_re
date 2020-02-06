@@ -31,12 +31,12 @@ public class HPController : MonoBehaviour
 
         if(currentHP <= 0)
         {
-            gameManager.dispatch(GManager.GameState.GameOver);
+            //gameManager.dispatch(GManager.GameState.GameOver);
         }
 
         if(currentTime <= 0)
         {
-            gameManager.dispatch(GManager.GameState.GameOver);
+            //gameManager.dispatch(GManager.GameState.GameOver);
         }
     }
 

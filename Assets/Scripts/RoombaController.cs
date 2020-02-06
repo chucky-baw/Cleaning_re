@@ -29,9 +29,13 @@ public class RoombaController : MonoBehaviour
         
     }
 
+
+
     // Update is called once per frame
     void Update()
     {
+
+
         float x = this.transform.position.x - prevPos.x;
         float y = this.transform.position.y - prevPos.y;
 
@@ -85,7 +89,7 @@ public class RoombaController : MonoBehaviour
 
             prevPos = this.transform.position;
 
-        Debug.Log(System.Math.Abs(rb.velocity.magnitude));
+        //Debug.Log(System.Math.Abs(rb.velocity.magnitude));
 
         
     }
