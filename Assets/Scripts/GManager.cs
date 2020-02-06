@@ -53,7 +53,7 @@ public class GManager : MonoBehaviour
         stage = 0;
         audioSource = this.gameObject.GetComponent<AudioSource>();
         bgmController = FindObjectOfType<BGMController>();
-        ButtonCanvas.gameObject.SetActive(false);
+        if(SceneManager.GetActiveScene().name == "Title") ButtonCanvas.gameObject.SetActive(false);
     }
 
 
@@ -249,6 +249,7 @@ public class GManager : MonoBehaviour
         if (state == GameState.Title)
         {
             //dispatch(GameState.Tutorial);
+            if (ButtonCanvas == null) yield return 0;
             ButtonCanvas.gameObject.SetActive(true);
         }
         else if(state == GameState.Playing)
