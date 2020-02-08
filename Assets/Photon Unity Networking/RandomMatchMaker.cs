@@ -88,7 +88,7 @@ public class RandomMatchMaker : Photon.PunBehaviour
         else
         {
             roomba = PhotonNetwork.Instantiate("MultiRoomba", new Vector3(-0.11f, -4.93f, -2.896f), Quaternion.identity, 0) as GameObject;
-            roomba.name = "MultiRoomba";
+
             cor.GetComponent<CatOnRoomba>().Roomba = roomba.gameObject;
             cor2.GetComponent<CatOnRoomba>().Roomba = roomba.gameObject;
             canvas.gameObject.SetActive(true);
