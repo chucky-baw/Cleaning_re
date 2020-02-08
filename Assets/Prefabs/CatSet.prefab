@@ -217,6 +217,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   catOnRoomba: {fileID: 7219057488411411765}
+  RoombaSpeed: {x: 0, y: 0}
+  mrc: {fileID: 0}
+  cor: {fileID: 0}
+  cor2: {fileID: 0}
 --- !u!82 &1825191079771948633
 AudioSource:
   m_ObjectHideFlags: 0

@@ -16,6 +16,12 @@ public class MultiRoombaController : Photon.PunBehaviour
     Vector3 arrowScale;
     public GameObject arrow;
     public GameObject gauge;
+    [SerializeField]
+    CatOnRoomba cor;
+    [SerializeField]
+    CatOnRoomba cor2;
+    public GameObject roomba;
+    RandomMatchMaker rmm;
 
 
     AudioSource audioSource;
@@ -32,6 +38,7 @@ public class MultiRoombaController : Photon.PunBehaviour
     void Start()
     {
         photonTransformView = GetComponent<PhotonTransformView>();
+        rmm = FindObjectOfType<RandomMatchMaker>();
         rb = this.gameObject.GetComponent<Rigidbody2D>();
         rbArrow = arrow.gameObject.GetComponent<Rigidbody2D>();
         audioSource = this.GetComponent<AudioSource>();
@@ -64,30 +71,7 @@ public class MultiRoombaController : Photon.PunBehaviour
 
             if (changeOwnerFlag == true)
             {
-
-                if (this.photonView.ownerId == 1)
-                {
-                    this.photonView.TransferOwnership(2);
-                    Debug.Log("2に渡す");
-                    changeOwnerFlag = false;
-                    rb.velocity *= 0;
-                    preVec = rb.velocity.magnitude;
-
-                    return;
-                }
-                else
-                {
-                    Debug.Log("0に渡す");
-
-                    this.photonView.TransferOwnership(1);
-                    rb.velocity *= 0;
-                    preVec = rb.velocity.magnitude;
-
-                    changeOwnerFlag = false;
-
-                    return;
-
-                }
+                changeOwner();
 
             }
 
@@ -185,6 +169,60 @@ public class MultiRoombaController : Photon.PunBehaviour
             audioSource.PlayOneShot(pickTrash);
         }
     }
+
+    public void changeOwner()
+    {
+
+        if (this.photonView.ownerId == 1)
+        {
+            this.photonView.TransferOwnership(2);
+            Debug.Log("2に渡す");
+            changeOwnerFlag = false;
+            rb.velocity *= 0;
+            preVec = rb.velocity.magnitude;
+
+            return;
+        }
+        else
+        {
+            Debug.Log("0に渡す");
+
+            this.photonView.TransferOwnership(1);
+            rb.velocity *= 0;
+            preVec = rb.velocity.magnitude;
+
+            changeOwnerFlag = false;
+
+            return;
+
+        }
+    }
+
+    public void onlyChange()
+    {
+        if (this.photonView.ownerId == 1)
+        {
+            this.photonView.TransferOwnership(2);
+            Debug.Log("2に渡す");
+            changeOwnerFlag = false;
+
+
+            return;
+        }
+        else
+        {
+            Debug.Log("0に渡す");
+
+            this.photonView.TransferOwnership(1);
+
+
+            changeOwnerFlag = false;
+
+            return;
+
+        }
+    }
+
 
 
 }
