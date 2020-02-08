@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GManager : MonoBehaviour
 {
@@ -42,6 +43,7 @@ public class GManager : MonoBehaviour
     public AudioClip ClearMusic;
     public AudioClip GameOverMusic;
 
+    GameObject resultCanvas;
 
 
     // Start is called before the first frame update
@@ -187,7 +189,7 @@ public class GManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
 
         if (currentState == GameState.Playing)
         {
@@ -207,6 +209,29 @@ public class GManager : MonoBehaviour
             }
 
             oldTrashCount = trashCount;
+
+        }
+
+        if(currentState == GameState.MultiPlay)
+        {
+            if (resultCanvas == null)
+            {
+                resultCanvas = GameObject.Find("ResultCanvas");
+            } 
+
+            int trashCount = GetTrashCount();
+
+            if (trashCount == 0 && oldTrashCount != 0)
+            {
+                //結果のキャンバスを出現させる
+                resultCanvas.SetActive(true);
+            }
+            else
+            {
+                resultCanvas.SetActive(false);
+                oldTrashCount = trashCount;
+
+            }
 
         }
 
