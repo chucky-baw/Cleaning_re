@@ -5,7 +5,7 @@ using Photon;
 
 public class RandomMatchMaker : Photon.PunBehaviour
 {
-    HPController hp;
+    //HPController hp;
     GameObject canvas;
     [SerializeField]
     CatOnRoomba cor;
@@ -14,13 +14,13 @@ public class RandomMatchMaker : Photon.PunBehaviour
     public GameObject roomba;
     void Start()
     {
-        hp = FindObjectOfType<HPController>();
+        //hp = FindObjectOfType<HPController>();
         //cor = FindObjectOfType<CatOnRoomba>();
         canvas = GameObject.Find("WaitingCanvas");
         canvas.gameObject.SetActive(true);
         PhotonNetwork.ConnectUsingSettings("0.1");
         PhotonNetwork.logLevel = PhotonLogLevel.Full;
-        hp.setFlag(false);
+        //hp.setFlag(false);
 
 
     }
@@ -50,7 +50,7 @@ public class RandomMatchMaker : Photon.PunBehaviour
     {
         Debug.Log("Other player arrived");
         //二人目のプレイヤーが到着した時、ゲームを開始する
-        hp.setFlag(true);
+        //hp.setFlag(true);
         //StartCoroutine(wait());
         canvas.gameObject.SetActive(false);
         //roomba = PhotonNetwork.Instantiate("MultiRoomba", new Vector3(-0.11f, -4.93f, -2.896f), Quaternion.identity, 0) as GameObject;
@@ -82,7 +82,7 @@ public class RandomMatchMaker : Photon.PunBehaviour
             //pv.TransferOwnership(1);
             Debug.Log("I'm second player!");
             canvas.gameObject.SetActive(false);
-            hp.setFlag(true);
+            //hp.setFlag(true);
 
         }
         else

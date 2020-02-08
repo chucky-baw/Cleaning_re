@@ -22,6 +22,10 @@ public class MultiRoombaController : Photon.PunBehaviour
     CatOnRoomba cor2;
     public GameObject roomba;
     RandomMatchMaker rmm;
+    MultiScoreManager multiscoremanager;
+
+    private int P1Trash = 0;
+    private int P2Trash = 0;
 
 
     AudioSource audioSource;
@@ -42,6 +46,7 @@ public class MultiRoombaController : Photon.PunBehaviour
         rb = this.gameObject.GetComponent<Rigidbody2D>();
         rbArrow = arrow.gameObject.GetComponent<Rigidbody2D>();
         audioSource = this.GetComponent<AudioSource>();
+        multiscoremanager = FindObjectOfType<MultiScoreManager>();
         
     }
 
@@ -167,6 +172,21 @@ public class MultiRoombaController : Photon.PunBehaviour
         if(collision.tag == "Trash")
         {
             audioSource.PlayOneShot(pickTrash);
+
+            //ルンバのオーナーを判別して、それぞれの得点に追加していく
+            if(this.photonView.ownerId == 1)
+            {
+                P1Trash = multiscoremanager.getP1Score();
+                P1Trash++;
+                multiscoremanager.SetP1Score(P1Trash);
+            } else
+            {
+                P2Trash = multiscoremanager.getP2Score();
+                P2Trash++;
+                multiscoremanager.SetP2Score(P2Trash);
+            }
+
+            Debug.Log("P1Trash = " + P1Trash + ", P2Trash = " + P2Trash);
         }
     }
 
@@ -190,31 +210,6 @@ public class MultiRoombaController : Photon.PunBehaviour
             this.photonView.TransferOwnership(1);
             rb.velocity *= 0;
             preVec = rb.velocity.magnitude;
-
-            changeOwnerFlag = false;
-
-            return;
-
-        }
-    }
-
-    public void onlyChange()
-    {
-        if (this.photonView.ownerId == 1)
-        {
-            this.photonView.TransferOwnership(2);
-            Debug.Log("2に渡す");
-            changeOwnerFlag = false;
-
-
-            return;
-        }
-        else
-        {
-            Debug.Log("0に渡す");
-
-            this.photonView.TransferOwnership(1);
-
 
             changeOwnerFlag = false;
 
