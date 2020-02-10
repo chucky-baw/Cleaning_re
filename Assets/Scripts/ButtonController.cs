@@ -21,6 +21,7 @@ public class ButtonController : MonoBehaviour
                 break;
 
             case 1:
+                PhotonNetwork.Disconnect();
                 FindObjectOfType<GManager>().dispatch(GManager.GameState.Title);
                 break;
 
